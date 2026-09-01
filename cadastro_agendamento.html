@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="QS Studio">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pré-agendamento | QS Studio</title>
+    <link rel="stylesheet" href="css/salao.css">
+    <script src="js/salao.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="img/logo.jpeg" alt="QS Studio">
+        </a>
+
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html#inicio">Início</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+                <li><a href="index.html#servicos">Serviços</a></li>
+                <li><a href="index.html#portfolio">Portfólio</a></li>
+                <li><a href="#pre-agendamento">Pré-agendamento</a></li>
+                <li><a href="index.html#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="pagina-pre-agendamento" id="pre-agendamento">
+
+    <section class="pre-agendamento-hero">
+        <span class="pre-agendamento-mini">QS Studio</span>
+        <h1>Pré-agendamento</h1>
+        <p>Monte seu atendimento, veja uma estimativa e envie sua solicitação pelo WhatsApp.</p>
+    </section>
+
+    <form id="formAgendamento" class="pre-agendamento-form" onsubmit="cadastrarAgendamento(); return false;">
+
+        <section class="pre-card">
+            <div class="pre-card-titulo">
+                <span>01</span>
+                <div>
+                    <p>Seus dados</p>
+                    <h2>Vamos começar</h2>
+                </div>
+            </div>
+
+            <div class="pre-grid pre-grid-2">
+                <div class="pre-campo">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" placeholder="Digite seu nome" required>
+                </div>
+
+                <div class="pre-campo">
+                    <label for="telefone">WhatsApp</label>
+                    <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
+                </div>
+            </div>
+        </section>
+
+        <section class="pre-card">
+            <div class="pre-card-titulo">
+                <span>02</span>
+                <div>
+                    <p>Tranças</p>
+                    <h2>Escolha seu modelo</h2>
+                </div>
+            </div>
+
+            <div class="pre-grid pre-grid-2">
+                <div class="pre-campo">
+                    <label for="tipoTranca">Modelo da trança</label>
+                    <select id="tipoTranca" required>
+                        <option value="">Selecione</option>
+                        <option value="Box Braids">Box Braids</option>
+                        <option value="Nago">Nagô</option>
+                        <option value="Outro">Outro modelo</option>
+                    </select>
+                </div>
+
+                <div class="pre-campo">
+                    <label for="tamanhoTranca">Tamanho</label>
+                    <select id="tamanhoTranca">
+                        <option value="">Selecione</option>
+                        <option value="PP" data-preco="295">PP — R$ 295,00</option>
+                        <option value="M" data-preco="310">M — R$ 310,00</option>
+                        <option value="G" data-preco="350">G — R$ 350,00</option>
+                        <option value="GG" data-preco="390">GG — R$ 390,00</option>
+                        <option value="XG" data-preco="430">XG — R$ 430,00</option>
+                    </select>
+                </div>
+
+                <div class="pre-campo">
+                    <label for="materialTranca">Material</label>
+                    <select id="materialTranca" required>
+                        <option value="">Selecione</option>
+                        <option value="Cliente leva o material" data-preco="0">Vou levar meu material — sem acréscimo</option>
+                        <option value="Material do studio" data-preco="125">Material do QS Studio — estimativa + R$ 125,00</option>
+                    </select>
+                </div>
+
+                <div class="pre-campo">
+                    <label for="fotoInspiracao">Foto de inspiração</label>
+                    <input type="file" id="fotoInspiracao" accept="image/*">
+                    <small class="pre-ajuda">Use uma referência do modelo e da cor que você deseja.</small>
+                </div>
+
+                <div class="pre-campo">
+                    <label for="fotoCabelo">Foto atual do seu cabelo</label>
+                    <input type="file" id="fotoCabelo" accept="image/*">
+                    <small class="pre-ajuda">Ajuda o QS Studio a estimar melhor a quantidade de material necessária.</small>
+                </div>
+            </div>
+
+            <div class="pre-material-aviso">
+                <strong>Sobre o material do QS Studio</strong>
+                <p>O valor do material é uma estimativa inicial de R$ 125,00 e poderá ser ajustado após a análise do modelo escolhido e da foto atual do seu cabelo.</p>
+                <p>Se você levar o próprio material, permanece somente o valor do serviço indicado na tabela.</p>
+                <p>Ao enviar o pré-agendamento pelo WhatsApp, envie também as fotos de inspiração e do seu cabelo para que possamos avaliar o material e confirmar a cotação.</p>
+            </div>
+
+            <p class="pre-nota">Os demais modelos de trança e seus valores serão inseridos conforme a tabela oficial do QS Studio.</p>
+        </section>
+
+        <section class="pre-card">
+            <div class="pre-card-titulo">
+                <span>03</span>
+                <div>
+                    <p>Adicionais</p>
+                    <h2>Deseja adicionar cílios?</h2>
+                </div>
+            </div>
+
+            <div class="pre-escolha">
+                <label class="pre-radio">
+                    <input type="radio" name="adicionarCilios" value="sim">
+                    <span>Sim, quero adicionar</span>
+                </label>
+
+                <label class="pre-radio">
+                    <input type="radio" name="adicionarCilios" value="nao" checked>
+                    <span>Não adicionar</span>
+                </label>
+            </div>
+
+            <div id="blocoCilios" class="pre-subcard is-hidden">
+                <div class="pre-grid pre-grid-2">
+                    <div class="pre-campo">
+                        <label for="tipoCilios">Serviço de cílios</label>
+                        <select id="tipoCilios">
+                            <option value="">Selecione</option>
+                            <option value="Volume Classic / Efeito Rímel" data-preco="100">Volume Classic / Efeito Rímel — R$ 100,00</option>
+                            <option value="Fox / Raposa" data-preco="150">Fox / Raposa — R$ 150,00</option>
+                            <option value="Volume Russo" data-preco="120">Volume Russo — R$ 120,00</option>
+                            <option value="Mega Volume" data-preco="150">Mega Volume — R$ 150,00</option>
+                            <option value="Volume Brasileiro / Mega Brasileiro" data-preco="150">Volume Brasileiro / Mega Brasileiro — R$ 150,00</option>
+                            <option value="Volume Luxo" data-preco="160">Volume Luxo — R$ 160,00</option>
+                            <option value="Lash Lifting" data-preco="100">Lash Lifting — R$ 100,00</option>
+                            <option value="Remoção" data-preco="30">Remoção — R$ 30,00</option>
+                        </select>
+                    </div>
+
+                    <div class="pre-campo">
+                        <label for="tipoAtendimentoCilios">Aplicação ou manutenção?</label>
+                        <select id="tipoAtendimentoCilios">
+                            <option value="aplicacao">Aplicação</option>
+                            <option value="manutencao">Manutenção</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pre-card">
+            <div class="pre-card-titulo">
+                <span>04</span>
+                <div>
+                    <p>Adicionais</p>
+                    <h2>Deseja adicionar unhas?</h2>
+                </div>
+            </div>
+
+            <div class="pre-escolha">
+                <label class="pre-radio">
+                    <input type="radio" name="adicionarUnhas" value="sim">
+                    <span>Sim, quero adicionar</span>
+                </label>
+
+                <label class="pre-radio">
+                    <input type="radio" name="adicionarUnhas" value="nao" checked>
+                    <span>Não adicionar</span>
+                </label>
+            </div>
+
+            <div id="blocoUnhas" class="pre-subcard is-hidden">
+                <div class="pre-grid pre-grid-2">
+                    <div class="pre-campo">
+                        <label for="servicoUnha">Serviço</label>
+                        <select id="servicoUnha">
+                            <option value="">Selecione</option>
+                            <option value="Alongamento" data-preco="100">Alongamento — R$ 100,00</option>
+                            <option value="Alongamento com pintura" data-preco="110">Alongamento com pintura — R$ 110,00</option>
+                            <option value="Alongamento com decoração" data-preco="120">Alongamento com decoração — R$ 120,00</option>
+                            <option value="Mão" data-preco="25">Mão — R$ 25,00</option>
+                            <option value="Pé e mão" data-preco="40">Pé e mão — R$ 40,00</option>
+                            <option value="Manutenção de alongamento" data-preco="70">Manutenção de alongamento — R$ 70,00</option>
+                        </select>
+                    </div>
+
+                    <div class="pre-campo">
+                        <label for="formatoUnha">Formato</label>
+                        <select id="formatoUnha">
+                            <option value="">Selecione</option>
+                            <option value="Quadrada">Quadrada</option>
+                            <option value="Almond">Almond / Amendoada</option>
+                            <option value="Ballerina">Ballerina / Coffin</option>
+                            <option value="Stiletto">Stiletto</option>
+                            <option value="Oval">Oval</option>
+                        </select>
+                    </div>
+
+                    <div class="pre-campo">
+                        <label for="quantidade3D">Decoração 3D</label>
+                        <select id="quantidade3D">
+                            <option value="0" data-preco="0">Sem decoração 3D</option>
+                            <option value="1" data-preco="10">1 unha — + R$ 10,00</option>
+                            <option value="2" data-preco="20">2 unhas — + R$ 20,00</option>
+                            <option value="3" data-preco="30">3 unhas — + R$ 30,00</option>
+                            <option value="4" data-preco="40">4 unhas — + R$ 40,00</option>
+                            <option value="5" data-preco="50">5 unhas — + R$ 50,00</option>
+                            <option value="10" data-preco="100">10 unhas — + R$ 100,00</option>
+                        </select>
+                    </div>
+
+                    <div class="pre-campo">
+                        <label for="unhasQuebradas">Unhas quebradas</label>
+                        <select id="unhasQuebradas">
+                            <option value="0" data-preco="0">Nenhuma</option>
+                            <option value="1" data-preco="20">1 unha — + R$ 20,00</option>
+                            <option value="2" data-preco="40">2 unhas — + R$ 40,00</option>
+                            <option value="3" data-preco="60">3 unhas — + R$ 60,00</option>
+                            <option value="4" data-preco="80">4 unhas — + R$ 80,00</option>
+                            <option value="5" data-preco="100">5 unhas — + R$ 100,00</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pre-card">
+            <div class="pre-card-titulo">
+                <span>05</span>
+                <div>
+                    <p>Data e horário</p>
+                    <h2>Quando você gostaria de ser atendida?</h2>
+                </div>
+            </div>
+
+            <div class="pre-grid pre-grid-2">
+                <div class="pre-campo">
+                    <label for="data">Data pretendida</label>
+                    <input type="date" id="data" required>
+                </div>
+
+                <div class="pre-campo">
+                    <label for="horario">Horário pretendido</label>
+                    <input type="time" id="horario" required>
+                </div>
+            </div>
+
+            <div class="pre-aviso">
+                O horário informado é uma preferência e ainda será conferido pelo QS Studio antes da confirmação.
+            </div>
+        </section>
+
+        <section class="pre-card">
+            <div class="pre-card-titulo">
+                <span>06</span>
+                <div>
+                    <p>Observações</p>
+                    <h2>Quer nos contar algo?</h2>
+                </div>
+            </div>
+
+            <div class="pre-campo">
+                <textarea id="observacoes" rows="5" placeholder="Referência, preferência de cor, detalhes do serviço ou qualquer informação importante."></textarea>
+            </div>
+        </section>
+
+        <section class="pre-resumo">
+            <div>
+                <span class="pre-resumo-label">Sua cotação estimada</span>
+                <div id="resumoServicos" class="pre-resumo-itens">Selecione os serviços para montar sua cotação.</div>
+            </div>
+
+            <div class="pre-total">
+                <span>Total estimado</span>
+                <strong id="valorTotal">R$ 0,00</strong>
+            </div>
+        </section>
+
+        <section class="pre-politica">
+            <h2>Política de Pré-agendamento</h2>
+            <p>O envio desta solicitação não garante a reserva do horário. O QS Studio verificará a disponibilidade da data e do horário escolhidos e responderá pelo WhatsApp.</p>
+            <p>Após a confirmação da disponibilidade, serão enviadas as instruções para pagamento do sinal de 50% do valor do serviço. A vaga só será considerada garantida após o pagamento e o envio do comprovante.</p>
+            <p>Em casos de atraso, cancelamento ou reagendamento, serão aplicadas as orientações informadas pelo QS Studio no momento da confirmação.</p>
+
+            <label class="pre-aceite">
+                <input type="checkbox" id="aceitePolitica" required>
+                <span>Li e estou de acordo com as condições do pré-agendamento.</span>
+            </label>
+        </section>
+
+        <div class="pre-acoes">
+            <button type="submit" class="pre-botao-whatsapp">
+                Enviar pré-agendamento pelo WhatsApp
+            </button>
+
+            <button type="button" class="pre-botao-comprovante" onclick="gerarComprovante()">
+                Gerar comprovante
+            </button>
+        </div>
+
+    </form>
+
+</main>
+
+</body>
+</html

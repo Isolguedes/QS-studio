@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="QS Studio">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprovante de Pré-agendamento | QS Studio</title>
+    <link rel="stylesheet" href="css/salao.css">
+
+    <style>
+        body {
+            min-height: 100vh;
+            padding: 44px 20px;
+            background:
+                radial-gradient(circle at 18% 12%, rgba(255,255,255,.52), transparent 28%),
+                radial-gradient(circle at 85% 84%, rgba(184,121,46,.14), transparent 25%),
+                linear-gradient(135deg, #f8e7d3, #efd2ae);
+        }
+
+        .recibo-pagina {
+            width: min(100%, 760px);
+            margin: 0 auto;
+        }
+
+        .recibo-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--marrom);
+        }
+
+        .recibo {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(124,59,21,.18);
+            border-radius: 34px;
+            background: rgba(255,248,238,.94);
+            box-shadow: 0 30px 70px rgba(72,28,7,.16);
+        }
+
+        .recibo::before {
+            content: "";
+            position: absolute;
+            top: -125px;
+            right: -115px;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: rgba(216,170,98,.18);
+        }
+
+        .recibo::after {
+            content: "";
+            position: absolute;
+            left: -115px;
+            bottom: -130px;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: rgba(124,59,21,.07);
+        }
+
+        .recibo-topo {
+            position: relative;
+            z-index: 2;
+            padding: 32px 38px 28px;
+            display: grid;
+            grid-template-columns: 94px 1fr;
+            gap: 22px;
+            align-items: center;
+            border-bottom: 1px solid rgba(124,59,21,.14);
+            background:
+                linear-gradient(120deg, rgba(239,210,174,.68), rgba(255,248,238,.88));
+        }
+
+        .recibo-logo {
+            width: 94px;
+            height: 94px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--dourado);
+            background: #f9e6cf;
+            box-shadow: 0 10px 24px rgba(79,31,8,.12);
+        }
+
+        .recibo-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .recibo-marca {
+            font-family: var(--sans);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--dourado);
+        }
+
+        .recibo-topo h1 {
+            margin: 3px 0 6px;
+            font-family: var(--script);
+            font-size: clamp(48px, 8vw, 67px);
+            line-height: .95;
+            font-weight: 400;
+            color: var(--marrom);
+        }
+
+        .recibo-topo p {
+            font-family: var(--sans);
+            font-size: 12px;
+            line-height: 1.6;
+            color: rgba(60,28,14,.68);
+        }
+
+        .recibo-status-wrap {
+            position: relative;
+            z-index: 2;
+            padding: 22px 38px 0;
+        }
+
+        .recibo-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 9px 13px;
+            border: 1px solid rgba(184,121,46,.28);
+            border-radius: 999px;
+            background: rgba(216,170,98,.12);
+            font-family: var(--sans);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--marrom);
+        }
+
+        .recibo-status i {
+            width: 7px;
+            height: 7px;
+            display: inline-block;
+            border-radius: 50%;
+            background: var(--dourado);
+        }
+
+        .recibo-conteudo {
+            position: relative;
+            z-index: 2;
+            padding: 26px 38px 34px;
+        }
+
+        .recibo-codigo {
+            display: flex;
+            justify-content: space-between;
+            gap: 22px;
+            padding-bottom: 20px;
+            margin-bottom: 22px;
+            border-bottom: 1px dashed rgba(124,59,21,.22);
+            font-family: var(--sans);
+            font-size: 11px;
+            color: rgba(60,28,14,.62);
+        }
+
+        .recibo-codigo strong {
+            color: var(--marrom);
+        }
+
+        .recibo-secao {
+            margin-top: 24px;
+        }
+
+        .recibo-secao h2 {
+            margin-bottom: 13px;
+            font-family: var(--serif);
+            font-size: 25px;
+            font-weight: 600;
+            color: var(--marrom);
+        }
+
+        .recibo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 11px 20px;
+        }
+
+        .recibo-item {
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(239,210,174,.18);
+        }
+
+        .recibo-item span {
+            display: block;
+            margin-bottom: 3px;
+            font-family: var(--sans);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--dourado);
+        }
+
+        .recibo-item strong {
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--texto);
+        }
+
+        .recibo-lista {
+            display: grid;
+            gap: 8px;
+        }
+
+        .recibo-linha {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(124,59,21,.08);
+            font-family: var(--sans);
+            font-size: 12px;
+        }
+
+        .recibo-linha span:last-child {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .recibo-total {
+            margin-top: 26px;
+            padding: 22px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            border-radius: 20px;
+            color: #f8dfbd;
+            background: linear-gradient(120deg, #63270a, #351405);
+            box-shadow: 0 14px 28px rgba(66,24,4,.16);
+        }
+
+        .recibo-total span {
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .recibo-total strong {
+            font-family: var(--serif);
+            font-size: 31px;
+            white-space: nowrap;
+        }
+
+        .recibo-aviso {
+            margin-top: 22px;
+            padding: 16px 18px;
+            border-left: 3px solid var(--dourado);
+            border-radius: 12px;
+            background: rgba(216,170,98,.1);
+            font-family: var(--sans);
+            font-size: 11px;
+            line-height: 1.7;
+            color: rgba(60,28,14,.76);
+        }
+
+        .recibo-assinatura {
+            margin-top: 28px;
+            text-align: center;
+        }
+
+        .recibo-assinatura span {
+            font-family: var(--script);
+            font-size: 34px;
+            color: var(--marrom);
+        }
+
+        .recibo-assinatura p {
+            margin-top: -4px;
+            font-family: var(--sans);
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--dourado);
+        }
+
+        .recibo-acoes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .recibo-botao {
+            min-height: 52px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 18px;
+            border-radius: 16px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .recibo-botao-principal {
+            border: 0;
+            color: var(--branco);
+            background: linear-gradient(135deg, #713310, #4b1b07);
+            box-shadow: 0 10px 22px rgba(69,26,5,.18);
+        }
+
+        .recibo-botao-secundario {
+            border: 1px solid rgba(90,37,12,.28);
+            color: var(--marrom);
+            background: rgba(255,248,238,.75);
+        }
+
+        .recibo-vazio {
+            padding: 45px;
+            text-align: center;
+            font-family: var(--sans);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 620px) {
+            body {
+                padding: 22px 12px;
+            }
+
+            .recibo {
+                border-radius: 25px;
+            }
+
+            .recibo-topo {
+                grid-template-columns: 72px 1fr;
+                padding: 24px 20px 21px;
+                gap: 14px;
+            }
+
+            .recibo-logo {
+                width: 72px;
+                height: 72px;
+            }
+
+            .recibo-status-wrap {
+                padding: 18px 20px 0;
+            }
+
+            .recibo-conteudo {
+                padding: 22px 20px 28px;
+            }
+
+            .recibo-grid,
+            .recibo-acoes {
+                grid-template-columns: 1fr;
+            }
+
+            .recibo-codigo {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .recibo-total {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 12mm;
+            }
+
+            body {
+                padding: 0;
+                background: #fff;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .recibo-pagina {
+                width: 100%;
+            }
+
+            .recibo-voltar,
+            .recibo-acoes {
+                display: none !important;
+            }
+
+            .recibo {
+                box-shadow: none;
+                border-radius: 22px;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="recibo-pagina">
+    <a href="cadastro_agendamento.html" class="recibo-voltar">← Voltar ao pré-agendamento</a>
+
+    <div id="resultado"></div>
+
+    <div class="recibo-acoes">
+        <button type="button" class="recibo-botao recibo-botao-principal" onclick="window.print()">
+            Salvar / Imprimir comprovante
+        </button>
+
+        <a href="cadastro_agendamento.html" class="recibo-botao recibo-botao-secundario">
+            Voltar ao QS Studio
+        </a>
+    </div>
+</main>
+
+<script>
+    function moeda(valor) {
+        return Number(valor || 0).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+    }
+
+    function formatarData(data) {
+        if (!data) return "Não informada";
+        const [ano, mes, dia] = data.split("-");
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    function formatarCriacao(data) {
+        if (!data) return "";
+        return new Date(data).toLocaleString("pt-BR", {
+            dateStyle: "short",
+            timeStyle: "short"
+        });
+    }
+
+    const areaResultado = document.getElementById("resultado");
+    const dadosSalvos = localStorage.getItem("preAgendamentoQS");
+
+    if (!dadosSalvos) {
+        areaResultado.innerHTML = `
+            <div class="recibo recibo-vazio">
+                <h2>Nenhum pré-agendamento encontrado.</h2>
+                <p>Volte ao formulário, preencha seus dados e gere o comprovante novamente.</p>
+            </div>
+        `;
+    } else {
+        const dados = JSON.parse(dadosSalvos);
+
+        let linhasServicos = "";
+
+        if (dados.tipoTranca) {
+            linhasServicos += `
+                <div class="recibo-linha">
+                    <span>${dados.tipoTranca}${dados.tamanho ? ` · ${dados.tamanho}` : ""}</span>
+                    <span>${dados.valorTranca ? moeda(dados.valorTranca) : "A confirmar"}</span>
+                </div>
+            `;
+        }
+
+        if (dados.valorMaterial > 0) {
+            linhasServicos += `
+                <div class="recibo-linha">
+                    <span>Material do QS Studio · estimativa</span>
+                    <span>${moeda(dados.valorMaterial)}</span>
+                </div>
+            `;
+        }
+
+        if (dados.adicionarCilios) {
+            linhasServicos += `
+                <div class="recibo-linha">
+                    <span>${dados.atendimentoCilios === "manutencao" ? "Manutenção" : "Aplicação"} · ${dados.tipoCilios}</span>
+                    <span>${moeda(dados.valorCilios)}</span>
+                </div>
+            `;
+        }
+
+        if (dados.adicionarUnhas) {
+            linhasServicos += `
+                <div class="recibo-linha">
+                    <span>${dados.servicoUnha}${dados.formatoUnha ? ` · ${dados.formatoUnha}` : ""}</span>
+                    <span>${moeda(dados.valorUnha)}</span>
+                </div>
+            `;
+
+            if (dados.quantidade3D > 0) {
+                linhasServicos += `
+                    <div class="recibo-linha">
+                        <span>Decoração 3D · ${dados.quantidade3D} unha(s)</span>
+                        <span>${moeda(dados.valor3D)}</span>
+                    </div>
+                `;
+            }
+
+            if (dados.unhasQuebradas > 0) {
+                linhasServicos += `
+                    <div class="recibo-linha">
+                        <span>Reparo · ${dados.unhasQuebradas} unha(s) quebrada(s)</span>
+                        <span>${moeda(dados.valorUnhasQuebradas)}</span>
+                    </div>
+                `;
+            }
+        }
+
+        areaResultado.innerHTML = `
+            <article class="recibo">
+                <header class="recibo-topo">
+                    <div class="recibo-logo">
+                        <img src="img/logo.jpeg" alt="QS Studio">
+                    </div>
+
+                    <div>
+                        <span class="recibo-marca">QS Studio</span>
+                        <h1>Pré-agendamento</h1>
+                        <p>Seu cuidado começa nos detalhes. Obrigada por escolher o QS Studio.</p>
+                    </div>
+                </header>
+
+                <div class="recibo-status-wrap">
+                    <span class="recibo-status">
+                        <i></i>
+                        Aguardando confirmação
+                    </span>
+                </div>
+
+                <div class="recibo-conteudo">
+                    <div class="recibo-codigo">
+                        <span>Solicitação <strong>${dados.codigo || "QS"}</strong></span>
+                        <span>Gerado em <strong>${formatarCriacao(dados.criadoEm)}</strong></span>
+                    </div>
+
+                    <section class="recibo-secao">
+                        <h2>Cliente</h2>
+
+                        <div class="recibo-grid">
+                            <div class="recibo-item">
+                                <span>Nome</span>
+                                <strong>${dados.nome || "Não informado"}</strong>
+                            </div>
+
+                            <div class="recibo-item">
+                                <span>WhatsApp</span>
+                                <strong>${dados.telefone || "Não informado"}</strong>
+                            </div>
+
+                            <div class="recibo-item">
+                                <span>Data pretendida</span>
+                                <strong>${formatarData(dados.data)}</strong>
+                            </div>
+
+                            <div class="recibo-item">
+                                <span>Horário pretendido</span>
+                                <strong>${dados.horario || "Não informado"}</strong>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="recibo-secao">
+                        <h2>Serviços escolhidos</h2>
+
+                        <div class="recibo-lista">
+                            ${linhasServicos || "<p>Nenhum serviço informado.</p>"}
+                        </div>
+                    </section>
+
+                    ${dados.material === "Cliente leva o material" ? `
+                        <section class="recibo-secao">
+                            <div class="recibo-item">
+                                <span>Material</span>
+                                <strong>A cliente levará o próprio material</strong>
+                            </div>
+                        </section>
+                    ` : ""}
+
+                    ${dados.observacoes ? `
+                        <section class="recibo-secao">
+                            <h2>Observações</h2>
+
+                            <div class="recibo-item">
+                                <strong>${dados.observacoes}</strong>
+                            </div>
+                        </section>
+                    ` : ""}
+
+                    <div class="recibo-total">
+                        <span>Valor total estimado</span>
+                        <strong>${moeda(dados.total)}</strong>
+                    </div>
+
+                    <div class="recibo-aviso">
+                        Este documento registra uma solicitação de pré-agendamento e não representa confirmação da vaga. O QS Studio verificará a disponibilidade do horário. Após a confirmação, serão enviadas pelo WhatsApp as instruções para pagamento do sinal de 50%. A vaga será garantida somente após o pagamento e o envio do comprovante.
+                    </div>
+
+                    <div class="recibo-assinatura">
+                        <span>QS Studio</span>
+                        <p>Beleza · cuidado · identidade</p>
+                    </div>
+                </div>
+            </article>
+        `;
+    }
+</script>
+
+</body>
+</html>

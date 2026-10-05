@@ -2010,3 +2010,871 @@ button {
     grid-template-columns: 1fr;
   }
 }
+ .portfolio-filtros {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 45px;
+        }
+
+
+        .filtro {
+            font-family: "Montserrat", sans-serif;
+            font-size: 13px;
+
+            padding: 11px 24px;
+
+            border: 1px solid #795b45;
+            border-radius: 30px;
+
+            background-color: transparent;
+            color: #51382a;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        .filtro:hover,
+        .filtro.ativo {
+            background-color: #51382a;
+            color: #ffffff;
+        }
+
+        .portfolio-galeria {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+        }
+
+
+        .portfolio-item {
+            position: relative;
+
+            height: 400px;
+
+            overflow: hidden;
+
+            border-radius: 18px;
+
+            background-color: #ffffff;
+
+            box-shadow:
+                0 8px 25px
+                rgba(67, 44, 32, 0.15);
+
+            transition: 0.3s;
+        }
+
+
+        .portfolio-item:hover {
+            transform: translateY(-7px);
+
+            box-shadow:
+                0 14px 30px
+                rgba(67, 44, 32, 0.22);
+        }
+
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition: 0.4s;
+        }
+
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+          .portfolio-info {
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            padding: 50px 20px 20px;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(50, 29, 20, 0.92)
+                );
+
+            opacity: 0;
+
+            transform: translateY(15px);
+
+            transition: 0.3s;
+        }
+
+
+        .portfolio-item:hover .portfolio-info {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        .portfolio-info h2 {
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 28px;
+
+            margin: 0 0 5px;
+        }
+
+
+        .portfolio-info p {
+            font-family:
+                "Montserrat",
+                sans-serif;
+
+            font-size: 12px;
+
+            margin: 0;
+        }
+
+         .portfolio-agendamento {
+            text-align: center;
+
+            margin-top: 70px;
+
+            padding: 45px 20px;
+
+            border-radius: 20px;
+
+            background-color: #efd2ae;
+        }
+
+
+        .portfolio-agendamento h2 {
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 35px;
+
+            color: #432c20;
+
+            margin: 0 0 8px;
+        }
+
+
+        .portfolio-agendamento p {
+            font-family:
+                "Montserrat",
+                sans-serif;
+
+            font-size: 13px;
+
+            color: #725d50;
+
+            margin-bottom: 25px;
+        }
+
+
+        .portfolio-agendamento .btn-portfolio {
+            display: inline-block;
+
+            padding: 13px 27px;
+
+            border-radius: 30px;
+
+            background-color: #51382a;
+
+            color: #efd2ae;
+
+            text-decoration: none;
+
+            font-family:
+                "Montserrat",
+                sans-serif;
+
+            font-size: 13px;
+
+            transition: 0.3s;
+        }
+
+
+        .portfolio-agendamento
+        .btn-portfolio:hover {
+
+            background-color: #a87b43;
+
+        }
+
+         .acessibilidade {
+            position: fixed;
+
+            right: 20px;
+            bottom: 20px;
+
+            z-index: 1000;
+        }
+
+
+        .btn-acessibilidade {
+            width: 55px;
+            height: 55px;
+
+            border: none;
+            border-radius: 50%;
+
+            background-color: #51382a;
+            color: #ffffff;
+
+            font-size: 23px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0, 0, 0, 0.25);
+        }
+
+
+        .painel-acessibilidade {
+            position: absolute;
+
+            width: 220px;
+
+            right: 0;
+            bottom: 70px;
+
+            padding: 18px;
+
+            background-color: #efd2ae;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 8px 30px
+                rgba(0, 0, 0, 0.20);
+
+            display: none;
+        }
+
+
+        .painel-acessibilidade.aberto {
+            display: block;
+        }
+
+
+        .painel-acessibilidade h2 {
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            color: #432c20;
+
+            margin-top: 0;
+        }
+
+
+        .painel-acessibilidade button {
+            width: 100%;
+
+            margin: 4px 0;
+
+            padding: 9px;
+
+            border:
+                1px solid #795b45;
+
+            border-radius: 7px;
+
+            background-color: transparent;
+
+            color: #51382a;
+
+            cursor: pointer;
+        }
+
+
+        .painel-acessibilidade button:hover {
+            background-color: #51382a;
+            color: #ffffff;
+        }
+
+        /* ===== AJUSTE FINAL DO TÍTULO DO PORTFÓLIO ===== */
+
+.portfolio-titulo {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 35px auto;
+    padding: 25px 20px 0;
+    text-align: center !important;
+}
+
+.portfolio-titulo h1 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+
+    text-align: center !important;
+    font-weight: normal;
+}
+
+/* PORTFÓLIO */
+.portfolio-titulo h1 strong {
+    display: block;
+    width: 100%;
+
+    margin: 0 auto 15px;
+
+    text-align: center !important;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 32px;
+    font-weight: 500;
+
+    color: #432c20;
+}
+
+/* QS STUDIO */
+.portfolio-titulo .qs-studio {
+    display: block;
+    position: relative;
+
+    width: fit-content;
+    margin: 0 auto;
+
+    text-align: center;
+
+    font-family: "Great Vibes", cursive;
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1.1;
+
+    color: #8a674f;
+}
+
+/* COROA */
+.portfolio-titulo .qs-studio .crown {
+    position: absolute;
+
+    top: -23px;
+    left: 42px;
+
+    margin: 0;
+
+    font-family: serif;
+    font-size: 23px;
+    line-height: 1;
+
+    color: #8a674f;
+}
+
+/* TEXTO ABAIXO */
+.portfolio-titulo > p {
+    display: block;
+
+    width: 100%;
+    max-width: 620px;
+
+    margin: 22px auto 0;
+
+    text-align: center !important;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 19px;
+    line-height: 1.5;
+
+    color: #725d50;
+}
+  * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: #f8f1e9;
+            color: #432c20;
+        }
+
+
+        /* =========================================
+           PÁGINA DE CONTATO
+        ========================================== */
+
+        .contato-page {
+            min-height: 100vh;
+            padding: 75px 20px 80px;
+
+            background: #f8f1e9;
+        }
+
+        .contato-container {
+            width: 100%;
+            max-width: 1150px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =========================================
+           TÍTULO
+        ========================================== */
+
+        .contato-titulo {
+            width: 100%;
+
+            margin: 0 auto 50px;
+
+            text-align: center;
+        }
+
+        .contato-titulo h1 {
+            margin: 0;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 34px;
+            font-weight: 500;
+
+            color: #432c20;
+        }
+
+
+        /* QS STUDIO */
+
+        .qs-contato {
+            display: block;
+
+            position: relative;
+
+            width: fit-content;
+
+            margin: 20px auto 0;
+
+            font-family: "Great Vibes", cursive;
+            font-size: 72px;
+            font-weight: 400;
+
+            line-height: 1;
+
+            color: #8a674f;
+        }
+
+
+        /* COROA */
+
+        .portfolio-crown {
+            position: absolute;
+
+            top: -27px;
+            left: 35px;
+
+            font-family: Georgia, serif;
+            font-size: 23px;
+
+            color: #8a674f;
+        }
+
+
+        /* TEXTO ABAIXO DO TÍTULO */
+
+        .contato-titulo p {
+            width: 100%;
+            max-width: 620px;
+
+            margin: 24px auto 0;
+
+            font-family: "Montserrat", sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+
+            line-height: 1.7;
+
+            color: #725d50;
+        }
+
+
+        /* =========================================
+           ÁREA PRINCIPAL
+        ========================================== */
+
+        .contato-conteudo {
+            display: grid;
+
+            grid-template-columns:
+                minmax(300px, 0.9fr)
+                minmax(420px, 1.3fr);
+
+            gap: 35px;
+
+            align-items: stretch;
+        }
+
+
+        /* =========================================
+           CARD DE CONTATO
+        ========================================== */
+
+        .contato-info {
+            padding: 38px;
+
+            background: #fffaf5;
+
+            border: 1px solid #eee0d4;
+            border-radius: 22px;
+
+            box-shadow:
+                0 8px 30px
+                rgba(67, 44, 32, 0.09);
+        }
+
+        .contato-info h2 {
+            margin: 0 0 8px;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 35px;
+            font-weight: 600;
+
+            color: #432c20;
+        }
+
+        .contato-introducao {
+            margin: 0 0 25px;
+
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            color: #725d50;
+        }
+
+
+        /* =========================================
+           ITENS DE CONTATO
+        ========================================== */
+
+        .contato-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            padding: 17px 0;
+
+            border-bottom: 1px solid #eaded3;
+        }
+
+        .contato-item:last-of-type {
+            border-bottom: none;
+        }
+
+
+        /* ÍCONE */
+
+        .contato-icone {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 50%;
+
+            background: #eee0d2;
+
+            color: #5c4437;
+
+            font-family: Arial, sans-serif;
+            font-size: 21px;
+        }
+
+
+        /* TEXTO */
+
+        .contato-texto {
+            min-width: 0;
+        }
+
+        .contato-texto strong {
+            display: block;
+
+            margin-bottom: 4px;
+
+            font-family: "Montserrat", sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+
+            color: #432c20;
+        }
+
+        .contato-texto a,
+        .contato-texto span {
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            color: #725d50;
+
+            text-decoration: none;
+        }
+
+        .contato-texto a:hover {
+            color: #8a674f;
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           BOTÕES WHATSAPP E INSTAGRAM
+        ========================================== */
+
+        .contato-botoes {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .contato-botoes a {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 45px;
+
+            padding: 12px 20px;
+
+            border-radius: 30px;
+
+            background: #5c4437;
+
+            color: #ffffff;
+
+            font-family: "Montserrat", sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+
+            text-decoration: none;
+
+            transition:
+                background 0.3s,
+                transform 0.3s;
+        }
+
+        .contato-botoes a:hover {
+            background: #a87b43;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================
+           GOOGLE MAPS
+        ========================================== */
+
+        .mapa-container {
+            position: relative;
+
+            min-height: 525px;
+
+            overflow: hidden;
+
+            border-radius: 22px;
+
+            background: #e9ded3;
+
+            box-shadow:
+                0 8px 30px
+                rgba(67, 44, 32, 0.12);
+        }
+
+        .mapa-container iframe {
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            min-height: 525px;
+
+            border: 0;
+        }
+
+
+        /* =========================================
+           HORÁRIOS
+        ========================================== */
+
+        .horarios {
+            margin-top: 40px;
+
+            padding: 35px 25px;
+
+            text-align: center;
+
+            background: #eee0d2;
+
+            border-radius: 22px;
+        }
+
+        .horarios h2 {
+            margin: 0 0 15px;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 32px;
+            font-weight: 600;
+
+            color: #432c20;
+        }
+
+        .horarios p {
+            margin: 7px 0;
+
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            color: #725d50;
+        }
+
+
+        /* =========================================
+           CHAMADA FINAL
+        ========================================== */
+
+        .contato-final {
+            margin-top: 35px;
+
+            padding: 45px 20px;
+
+            text-align: center;
+        }
+
+        .contato-final h2 {
+            margin: 0 0 10px;
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 38px;
+            font-weight: 600;
+
+            color: #432c20;
+        }
+
+        .contato-final p {
+            margin: 0 0 25px;
+
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+
+            color: #725d50;
+        }
+
+        .btn-agendamento-contato {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 48px;
+
+            padding: 13px 28px;
+
+            border-radius: 30px;
+
+            background: #5c4437;
+
+            color: #ffffff;
+
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+
+            text-decoration: none;
+
+            transition: 0.3s;
+        }
+
+        .btn-agendamento-contato:hover {
+            background: #a87b43;
+
+            transform: translateY(-2px);
+        }
+ @media (max-width: 850px) {
+
+            .contato-conteudo {
+                grid-template-columns: 1fr;
+            }
+
+            .mapa-container,
+            .mapa-container iframe {
+                min-height: 400px;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .contato-page {
+                padding: 55px 15px 60px;
+            }
+
+            .contato-titulo h1 {
+                font-size: 30px;
+            }
+
+            .qs-contato {
+                font-size: 60px;
+            }
+
+            .portfolio-crown {
+                top: -24px;
+                left: 28px;
+
+                font-size: 20px;
+            }
+
+            .contato-info {
+                padding: 27px 20px;
+            }
+
+            .contato-botoes {
+                flex-direction: column;
+            }
+
+            .contato-botoes a {
+                width: 100%;
+            }
+
+            .contato-final h2 {
+                font-size: 32px;
+            }
+
+        }
+

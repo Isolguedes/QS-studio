@@ -1,3 +1,155 @@
+function gerarComprovante() {
+    if (!validarFormulario()) {
+        return;
+    }
+
+    salvarDados();
+
+    window.open(
+        "comprovante.html",
+        "_blank"
+    );
+}
+
+
+// ========================================
+// INICIALIZAÇÃO DA PÁGINA
+// ========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Define a data mínima como hoje
+    const data = document.getElementById("data");
+
+    if (data) {
+        const hoje = new Date();
+
+        const ano = hoje.getFullYear();
+
+        const mes = String(
+            hoje.getMonth() + 1
+        ).padStart(2, "0");
+
+        const dia = String(
+            hoje.getDate()
+        ).padStart(2, "0");
+
+        data.min = `${ano}-${mes}-${dia}`;
+    }
+
+
+    // ========================================
+    // CÍLIOS
+    // ========================================
+
+    document
+        .querySelectorAll('input[name="adicionarCilios"]')
+        .forEach(elemento => {
+
+            elemento.addEventListener("change", function () {
+                atualizarBlocos();
+                calcularCotacao();
+            });
+
+        });
+
+
+    // ========================================
+    // UNHAS
+    // ========================================
+
+    document
+        .querySelectorAll('input[name="adicionarUnhas"]')
+        .forEach(elemento => {
+
+            elemento.addEventListener("change", function () {
+                atualizarBlocos();
+                calcularCotacao();
+            });
+
+        });
+
+
+    // ========================================
+    // CAMPOS QUE ATUALIZAM A COTAÇÃO
+    // ========================================
+
+    const campos = [
+        "tipoTranca",
+        "tamanhoTranca",
+        "materialTranca",
+        "tipoCilios",
+        "tipoAtendimentoCilios",
+        "servicoUnha",
+        "formatoUnha",
+        "quantidade3D",
+        "unhasQuebradas"
+    ];
+
+    campos.forEach(id => {
+
+        const elemento = document.getElementById(id);
+
+        if (elemento) {
+            elemento.addEventListener("change", function () {
+                atualizarBlocos();
+                calcularCotacao();
+            });
+        }
+
+    });
+
+
+    atualizarBlocos();
+    calcularCotacao();
+
+
+    // ========================================
+    // FILTROS DO PORTFÓLIO
+    // ========================================
+
+    const botoes = document.querySelectorAll(".filtro");
+    const trabalhos = document.querySelectorAll(".portfolio-item");
+
+    botoes.forEach(botao => {
+
+        botao.addEventListener("click", function () {
+
+            const categoria = this.getAttribute("data-filtro");
+
+            botoes.forEach(item => {
+                item.classList.remove("ativo");
+            });
+
+            this.classList.add("ativo");
+
+            trabalhos.forEach(trabalho => {
+
+                const tipo =
+                    trabalho.getAttribute("data-categoria");
+
+                if (
+                    categoria === "todos" ||
+                    categoria === tipo
+                ) {
+                    trabalho.style.display = "block";
+                } else {
+                    trabalho.style.display = "none";
+                }
+
+            });
+
+        });
+
+    });
+
+});
+
+
+// ========================================
+// CONFIGURAÇÕES
+// ========================================
+
 const WHATSAPP_QS = "5538999244236";
 
 const precosCiliosManutencao = {
@@ -6,56 +158,100 @@ const precosCiliosManutencao = {
     "Volume Brasileiro / Mega Brasileiro": 120
 };
 
+
+// ========================================
+// FUNÇÕES AUXILIARES
+// ========================================
+
 function moeda(valor) {
-    return Number(valor || 0).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
+
+    return Number(valor || 0).toLocaleString(
+        "pt-BR",
+        {
+            style: "currency",
+            currency: "BRL"
+        }
+    );
+
 }
 
+
 function textoSelecionado(id) {
-    const elemento = document.getElementById(id);
+
+    const elemento =
+        document.getElementById(id);
 
     if (!elemento) {
         return "";
     }
 
     return elemento.value || "";
+
 }
 
-function valorSelecionado(id) {
-    const elemento = document.getElementById(id);
 
-    if (!elemento || elemento.selectedIndex < 0) {
+function valorSelecionado(id) {
+
+    const elemento =
+        document.getElementById(id);
+
+    if (
+        !elemento ||
+        elemento.selectedIndex < 0
+    ) {
         return 0;
     }
 
-    const opcao = elemento.options[elemento.selectedIndex];
+    const opcao =
+        elemento.options[elemento.selectedIndex];
 
-    return Number(opcao.dataset.preco || 0);
-}
-
-function radioSelecionado(nome) {
-    const elemento = document.querySelector(
-        `input[name="${nome}"]:checked`
+    return Number(
+        opcao.dataset.preco || 0
     );
 
-    return elemento ? elemento.value : "";
 }
 
+
+function radioSelecionado(nome) {
+
+    const elemento =
+        document.querySelector(
+            `input[name="${nome}"]:checked`
+        );
+
+    return elemento
+        ? elemento.value
+        : "";
+
+}
+
+
 function formatarData(data) {
+
     if (!data) {
         return "";
     }
 
-    const partes = data.split("-");
+    const partes =
+        data.split("-");
 
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
+
 }
 
+
+// ========================================
+// MOSTRAR / ESCONDER BLOCOS
+// ========================================
+
 function atualizarBlocos() {
-    const blocoCilios = document.getElementById("blocoCilios");
-    const blocoUnhas = document.getElementById("blocoUnhas");
+
+    const blocoCilios =
+        document.getElementById("blocoCilios");
+
+    const blocoUnhas =
+        document.getElementById("blocoUnhas");
+
 
     const adicionarCilios =
         radioSelecionado("adicionarCilios");
@@ -63,21 +259,30 @@ function atualizarBlocos() {
     const adicionarUnhas =
         radioSelecionado("adicionarUnhas");
 
+
     if (blocoCilios) {
+
         if (adicionarCilios === "sim") {
             blocoCilios.classList.remove("is-hidden");
         } else {
             blocoCilios.classList.add("is-hidden");
         }
+
     }
 
+
     if (blocoUnhas) {
+
         if (adicionarUnhas === "sim") {
             blocoUnhas.classList.remove("is-hidden");
         } else {
             blocoUnhas.classList.add("is-hidden");
         }
+
     }
+
+
+    // Material para tranças
 
     const material =
         textoSelecionado("materialTranca");
@@ -88,37 +293,57 @@ function atualizarBlocos() {
     const fotoCabelo =
         document.getElementById("fotoCabelo");
 
+
     if (fotoInspiracao) {
+
         const campo =
             fotoInspiracao.closest(".pre-campo");
 
         if (campo) {
+
             if (material === "Material do studio") {
                 campo.classList.remove("is-hidden");
             } else {
                 campo.classList.add("is-hidden");
             }
+
         }
+
     }
 
+
     if (fotoCabelo) {
+
         const campo =
             fotoCabelo.closest(".pre-campo");
 
         if (campo) {
+
             if (material === "Material do studio") {
                 campo.classList.remove("is-hidden");
             } else {
                 campo.classList.add("is-hidden");
             }
+
         }
+
     }
+
 }
 
+
+// ========================================
+// CALCULAR COTAÇÃO
+// ========================================
+
 function calcularCotacao() {
+
     let total = 0;
 
     const itens = [];
+
+
+    // TRANÇAS
 
     const tipoTranca =
         textoSelecionado("tipoTranca");
@@ -129,7 +354,12 @@ function calcularCotacao() {
     const material =
         textoSelecionado("materialTranca");
 
-    if (tipoTranca === "Box Braids" && tamanho) {
+
+    if (
+        tipoTranca === "Box Braids" &&
+        tamanho
+    ) {
+
         const valorTranca =
             valorSelecionado("tamanhoTranca");
 
@@ -138,48 +368,74 @@ function calcularCotacao() {
         itens.push(
             `Box Braids ${tamanho}: ${moeda(valorTranca)}`
         );
+
     } else if (tipoTranca) {
+
         itens.push(
             `${tipoTranca}: valor a confirmar`
         );
+
     }
 
+
+    // MATERIAL
+
     if (material === "Material do studio") {
+
         total += 125;
 
         itens.push(
             `Material QS Studio: ${moeda(125)}`
         );
+
     }
+
+
+    // CÍLIOS
 
     if (
         radioSelecionado("adicionarCilios") === "sim"
     ) {
+
         const tipoCilios =
             textoSelecionado("tipoCilios");
 
         const atendimentoCilios =
-            textoSelecionado("tipoAtendimentoCilios");
+            textoSelecionado(
+                "tipoAtendimentoCilios"
+            );
+
 
         if (tipoCilios) {
+
             if (
                 atendimentoCilios === "manutencao"
             ) {
+
                 const valor =
-                    precosCiliosManutencao[tipoCilios];
+                    precosCiliosManutencao[
+                        tipoCilios
+                    ];
+
 
                 if (valor !== undefined) {
+
                     total += valor;
 
                     itens.push(
                         `Manutenção de cílios - ${tipoCilios}: ${moeda(valor)}`
                     );
+
                 } else {
+
                     itens.push(
                         `Manutenção de ${tipoCilios}: indisponível`
                     );
+
                 }
+
             } else {
+
                 const valor =
                     valorSelecionado("tipoCilios");
 
@@ -188,20 +444,29 @@ function calcularCotacao() {
                 itens.push(
                     `${tipoCilios}: ${moeda(valor)}`
                 );
+
             }
+
         }
+
     }
+
+
+    // UNHAS
 
     if (
         radioSelecionado("adicionarUnhas") === "sim"
     ) {
+
         const servicoUnha =
             textoSelecionado("servicoUnha");
 
         const formatoUnha =
             textoSelecionado("formatoUnha");
 
+
         if (servicoUnha) {
+
             const valor =
                 valorSelecionado("servicoUnha");
 
@@ -211,82 +476,133 @@ function calcularCotacao() {
                 `${servicoUnha}: ${moeda(valor)}`
             );
 
+
             if (
                 formatoUnha &&
                 servicoUnha !== "Mão" &&
                 servicoUnha !== "Pé e mão"
             ) {
+
                 itens.push(
                     `Formato: ${formatoUnha}`
                 );
+
             }
+
         }
+
+
+        // DECORAÇÃO 3D
 
         const quantidade3D =
             Number(
-                textoSelecionado("quantidade3D") || 0
+                textoSelecionado(
+                    "quantidade3D"
+                ) || 0
             );
 
         const valor3D =
-            valorSelecionado("quantidade3D");
+            valorSelecionado(
+                "quantidade3D"
+            );
+
 
         if (quantidade3D > 0) {
+
             total += valor3D;
 
             itens.push(
                 `Decoração 3D (${quantidade3D} unha(s)): + ${moeda(valor3D)}`
             );
+
         }
+
+
+        // UNHAS QUEBRADAS
 
         const unhasQuebradas =
             Number(
-                textoSelecionado("unhasQuebradas") || 0
+                textoSelecionado(
+                    "unhasQuebradas"
+                ) || 0
             );
 
         const valorQuebradas =
-            valorSelecionado("unhasQuebradas");
+            valorSelecionado(
+                "unhasQuebradas"
+            );
+
 
         if (unhasQuebradas > 0) {
+
             total += valorQuebradas;
 
             itens.push(
                 `${unhasQuebradas} unha(s) quebrada(s): + ${moeda(valorQuebradas)}`
             );
+
         }
+
     }
 
+
+    // RESUMO
+
     const resumo =
-        document.getElementById("resumoServicos");
+        document.getElementById(
+            "resumoServicos"
+        );
 
     const valorTotal =
-        document.getElementById("valorTotal");
+        document.getElementById(
+            "valorTotal"
+        );
+
 
     if (resumo) {
+
         if (itens.length > 0) {
+
             resumo.innerHTML =
                 itens
                     .map(
-                        item => `<div>${item}</div>`
+                        item =>
+                            `<div>${item}</div>`
                     )
                     .join("");
+
         } else {
+
             resumo.innerHTML =
                 "Selecione os serviços para montar sua cotação.";
+
         }
+
     }
 
+
     if (valorTotal) {
+
         valorTotal.textContent =
             moeda(total);
+
     }
+
 
     return {
         total,
         itens
     };
+
 }
 
+
+// ========================================
+// VALIDAÇÃO DO FORMULÁRIO
+// ========================================
+
 function validarFormulario() {
+
     const nome =
         document.getElementById("nome");
 
@@ -298,6 +614,7 @@ function validarFormulario() {
 
     const horario =
         document.getElementById("horario");
+
 
     if (
         !nome ||
@@ -311,100 +628,149 @@ function validarFormulario() {
         !horario ||
         !horario.value
     ) {
+
         alert(
             "Preencha todos os campos obrigatórios."
         );
 
         return false;
+
     }
+
+
+    // Box Braids precisa de tamanho
 
     if (
         textoSelecionado("tipoTranca") ===
             "Box Braids" &&
         !textoSelecionado("tamanhoTranca")
     ) {
+
         alert(
             "Selecione o tamanho da Box Braids."
         );
 
         return false;
+
     }
 
+
+    // Validação dos cílios
+
     if (
-        radioSelecionado("adicionarCilios") ===
-        "sim"
+        radioSelecionado(
+            "adicionarCilios"
+        ) === "sim"
     ) {
+
         const tipoCilios =
             textoSelecionado("tipoCilios");
 
         if (!tipoCilios) {
+
             alert(
                 "Selecione o serviço de cílios."
             );
 
             return false;
+
         }
+
 
         const atendimento =
             textoSelecionado(
                 "tipoAtendimentoCilios"
             );
 
+
         if (
             atendimento === "manutencao" &&
-            precosCiliosManutencao[tipoCilios] ===
-                undefined
+            precosCiliosManutencao[
+                tipoCilios
+            ] === undefined
         ) {
+
             alert(
                 "Esse modelo de cílios não possui manutenção."
             );
 
             return false;
+
         }
+
     }
 
+
+    // Validação das unhas
+
     if (
-        radioSelecionado("adicionarUnhas") ===
-            "sim" &&
+        radioSelecionado(
+            "adicionarUnhas"
+        ) === "sim" &&
         !textoSelecionado("servicoUnha")
     ) {
+
         alert(
             "Selecione o serviço de unhas."
         );
 
         return false;
+
     }
+
+
+    // DATA
 
     const dataEscolhida =
         new Date(
             `${data.value}T12:00:00`
         );
 
-    const hoje = new Date();
+    const hoje =
+        new Date();
 
     hoje.setHours(0, 0, 0, 0);
 
+
     if (dataEscolhida < hoje) {
+
         alert(
             "Escolha uma data futura."
         );
 
         return false;
+
     }
 
-    if (dataEscolhida.getDay() === 0) {
+
+    // Não atende domingo
+
+    if (
+        dataEscolhida.getDay() === 0
+    ) {
+
         alert(
             "O QS Studio não atende aos domingos."
         );
 
         return false;
+
     }
 
+
     return true;
+
 }
 
+
+// ========================================
+// GERAR CÓDIGO DO AGENDAMENTO
+// ========================================
+
 function gerarCodigo() {
-    const agora = new Date();
+
+    const agora =
+        new Date();
 
     const ano =
         String(
@@ -436,43 +802,69 @@ function gerarCodigo() {
             agora.getSeconds()
         ).padStart(2, "0");
 
+
     return `QS-${ano}${mes}${dia}-${hora}${minuto}${segundo}`;
+
 }
 
+
+// ========================================
+// COLETAR DADOS
+// ========================================
+
 function coletarDados() {
+
     const cotacao =
         calcularCotacao();
 
+
     const tipoCilios =
-        radioSelecionado("adicionarCilios") ===
-        "sim"
-            ? textoSelecionado("tipoCilios")
+        radioSelecionado(
+            "adicionarCilios"
+        ) === "sim"
+            ? textoSelecionado(
+                "tipoCilios"
+            )
             : "";
+
 
     const atendimentoCilios =
         tipoCilios
             ? textoSelecionado(
-                  "tipoAtendimentoCilios"
-              )
+                "tipoAtendimentoCilios"
+            )
             : "";
+
 
     let valorCilios = 0;
 
+
     if (tipoCilios) {
+
         if (
-            atendimentoCilios === "manutencao"
+            atendimentoCilios ===
+            "manutencao"
         ) {
+
             valorCilios =
                 precosCiliosManutencao[
                     tipoCilios
                 ] || 0;
+
         } else {
+
             valorCilios =
-                valorSelecionado("tipoCilios");
+                valorSelecionado(
+                    "tipoCilios"
+                );
+
         }
+
     }
 
+
     return {
+
         codigo: gerarCodigo(),
 
         criadoEm:
@@ -489,7 +881,9 @@ function coletarDados() {
                 .value.trim(),
 
         tipoTranca:
-            textoSelecionado("tipoTranca"),
+            textoSelecionado(
+                "tipoTranca"
+            ),
 
         tamanho:
             textoSelecionado(
@@ -590,10 +984,18 @@ function coletarDados() {
 
         itens:
             cotacao.itens
+
     };
+
 }
 
+
+// ========================================
+// SALVAR DADOS
+// ========================================
+
 function salvarDados() {
+
     const dados =
         coletarDados();
 
@@ -603,17 +1005,26 @@ function salvarDados() {
     );
 
     return dados;
+
 }
 
+
+// ========================================
+// ENVIAR PRÉ-AGENDAMENTO PARA WHATSAPP
+// ========================================
+
 function cadastrarAgendamento() {
+
     if (!validarFormulario()) {
         return;
     }
+
 
     const dados =
         salvarDados();
 
     const mensagem = [];
+
 
     mensagem.push(
         "Olá, tudo bem? 💖"
@@ -645,6 +1056,9 @@ function cadastrarAgendamento() {
         `🕒 Horário pretendido: ${dados.horario}`
     );
 
+
+    // TRANÇAS
+
     mensagem.push("");
 
     mensagem.push(
@@ -655,25 +1069,33 @@ function cadastrarAgendamento() {
         `Modelo: ${dados.tipoTranca}`
     );
 
+
     if (dados.tamanho) {
+
         mensagem.push(
             `Tamanho: ${dados.tamanho}`
         );
+
     }
+
 
     if (
         dados.material ===
         "Cliente leva o material"
     ) {
+
         mensagem.push(
             "Material: vou levar meu próprio material"
         );
+
     }
+
 
     if (
         dados.material ===
         "Material do studio"
     ) {
+
         mensagem.push(
             "Material: QS Studio"
         );
@@ -689,9 +1111,14 @@ function cadastrarAgendamento() {
         mensagem.push(
             "📸 Enviarei uma foto atual do meu cabelo para avaliação."
         );
+
     }
 
+
+    // CÍLIOS
+
     if (dados.adicionarCilios) {
+
         mensagem.push("");
 
         mensagem.push(
@@ -716,9 +1143,14 @@ function cadastrarAgendamento() {
                 dados.valorCilios
             )}`
         );
+
     }
 
+
+    // UNHAS
+
     if (dados.adicionarUnhas) {
+
         mensagem.push("");
 
         mensagem.push(
@@ -729,30 +1161,45 @@ function cadastrarAgendamento() {
             `Serviço: ${dados.servicoUnha}`
         );
 
+
         if (
             dados.formatoUnha &&
             dados.servicoUnha !== "Mão" &&
             dados.servicoUnha !== "Pé e mão"
         ) {
+
             mensagem.push(
                 `Formato: ${dados.formatoUnha}`
             );
+
         }
 
-        if (dados.quantidade3D > 0) {
+
+        if (
+            dados.quantidade3D > 0
+        ) {
+
             mensagem.push(
                 `Decoração 3D: ${dados.quantidade3D} unha(s)`
             );
+
         }
+
 
         if (
             dados.unhasQuebradas > 0
         ) {
+
             mensagem.push(
                 `Unhas quebradas: ${dados.unhasQuebradas}`
             );
+
         }
+
     }
+
+
+    // TOTAL
 
     mensagem.push("");
 
@@ -762,7 +1209,11 @@ function cadastrarAgendamento() {
         )}`
     );
 
+
+    // OBSERVAÇÕES
+
     if (dados.observacoes) {
+
         mensagem.push("");
 
         mensagem.push(
@@ -772,7 +1223,9 @@ function cadastrarAgendamento() {
         mensagem.push(
             dados.observacoes
         );
+
     }
+
 
     mensagem.push("");
 
@@ -784,124 +1237,18 @@ function cadastrarAgendamento() {
         "Após a confirmação da disponibilidade, aguardarei as instruções para pagamento do sinal de 50% para garantia da vaga."
     );
 
+
+    // ENVIA PARA WHATSAPP
+
     const texto =
         encodeURIComponent(
             mensagem.join("\n")
         );
 
+
     window.open(
         `https://wa.me/${WHATSAPP_QS}?text=${texto}`,
         "_blank"
     );
+
 }
-
-function gerarComprovante() {
-    if (!validarFormulario()) {
-        return;
-    }
-
-    salvarDados();
-
-    window.open(
-        "comprovante.html",
-        "_blank"
-    );
-}
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-        const data =
-            document.getElementById(
-                "data"
-            );
-
-        if (data) {
-            const hoje =
-                new Date();
-
-            const ano =
-                hoje.getFullYear();
-
-            const mes =
-                String(
-                    hoje.getMonth() + 1
-                ).padStart(2, "0");
-
-            const dia =
-                String(
-                    hoje.getDate()
-                ).padStart(2, "0");
-
-            data.min =
-                `${ano}-${mes}-${dia}`;
-        }
-
-        document
-            .querySelectorAll(
-                'input[name="adicionarCilios"]'
-            )
-            .forEach(
-                elemento => {
-                    elemento.addEventListener(
-                        "change",
-                        function () {
-                            atualizarBlocos();
-                            calcularCotacao();
-                        }
-                    );
-                }
-            );
-
-        document
-            .querySelectorAll(
-                'input[name="adicionarUnhas"]'
-            )
-            .forEach(
-                elemento => {
-                    elemento.addEventListener(
-                        "change",
-                        function () {
-                            atualizarBlocos();
-                            calcularCotacao();
-                        }
-                    );
-                }
-            );
-
-        const campos = [
-            "tipoTranca",
-            "tamanhoTranca",
-            "materialTranca",
-            "tipoCilios",
-            "tipoAtendimentoCilios",
-            "servicoUnha",
-            "formatoUnha",
-            "quantidade3D",
-            "unhasQuebradas"
-        ];
-
-        campos.forEach(
-            id => {
-                const elemento =
-                    document.getElementById(
-                        id
-                    );
-
-                if (elemento) {
-                    elemento.addEventListener(
-                        "change",
-                        function () {
-                            atualizarBlocos();
-                            calcularCotacao();
-                        }
-                    );
-                }
-            }
-        );
-
-        atualizarBlocos();
-
-        calcularCotacao();
-    }
-);
